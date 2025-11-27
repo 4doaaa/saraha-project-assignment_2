@@ -40,7 +40,10 @@ const userSchema = new mongoose.Schema({
     },
     phone: String,
     confirmEmail:Date,
-}, {timestamps: true });
+    confirmEmailOTP: String,
+    
+},
+ {timestamps: true });
 const UserModel = mongoose.models.User || mongoose.model("User",userSchema);
 
 export default UserModel;

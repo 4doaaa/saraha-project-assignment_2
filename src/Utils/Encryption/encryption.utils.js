@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import fs from "fs";
 const ENCRYPTION_SECERT_KEY = Buffer.from("12343567891234567891233456789012", 'utf8');
-const IV_LENGTH = 16; //FOR AES , THIS IS ALWAYES 16
+const IV_LENGTH = +process.env.IV_LENGTH; //FOR AES , THIS IS ALWAYES 16
 
 //encrypt
 export const encrypt = (plaintext) => {
@@ -74,7 +74,7 @@ export const asymmetricDecript = (cipherText) => {
 
     const decryptedData = crypto.privateDecrypt({
         key:fs.readFileSync("private_key.pem","utf8"),
-        padding: crypto.constants.RSA_PKCS1_OAEP_PADDING //ده عشان ميجيبليش اي ايرورو);
+        padding: crypto.constants.RSA_PKCS1_OAEP_PADDING //ده عشان ميجيبليش اي ايرورو 
 },
 bufferedCipherText
     );

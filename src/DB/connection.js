@@ -4,7 +4,7 @@ import mongoose from "mongoose";
  const connectDB = async ()=>{
     try {
         await mongoose.connect(
-            "mongodb+srv://saraha:sarahadb@cluster0.ca1xj8h.mongodb.net/sarahaApp_3" ,
+            process.env.DB_URI,
         {
             serverSelectionTimeoutMS: 5000,
         });

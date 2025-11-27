@@ -27,8 +27,7 @@ return await model.find(filter).select(select).populate(populate);
      select = "" ,
       populate = [],
     } = {}) => {
-return await model.findById(filter).select(select).populate(populate);
-    };
+return await model.findById(id).select(select).populate(populate);    };
 
 
         export const create = async({
@@ -47,4 +46,26 @@ return await model.create(data , options);
     options ={runValidators : true},
     } = {}) => {
 return await model.updateOne(filter, data , options);
+    };
+
+
+
+    export const findByIdAndUpdate = async({
+    model , 
+    id = "",
+    data = {},
+    options ={new : true , runValidators: true},
+    } = {}) => {
+return await model.findByIdAndUpdate(id, data , options);
+    };
+
+
+
+    export const findOneIdAndUpdate = async({
+    model , 
+    filter = {},
+    data = {},
+    options ={new : true , runValidators: true},
+    } = {}) => {
+return await model.findOneIdAndUpdate(filter, data , options);
     };

@@ -1,7 +1,10 @@
+
 import * as dbService from "../../DB/dbService.js";
 import UserModel from "../../DB/Models/user.model.js";
-import { asymmetricDecript, decrypt } from "../../Utils/Encryption/encryption.utils.js";
+import { asymmetricDecript } from "../../Utils/Encryption/encryption.utils.js";
 import { successResponse } from "../../Utils/successResponse.utils.js";
+
+
 export const listAllUsers = async (req, res, next ) =>{
     let users = await dbService.find({
         model: UserModel,
@@ -23,4 +26,35 @@ export const listAllUsers = async (req, res, next ) =>{
             data: {users},
           });
   
+};
+
+
+
+
+
+export const updateProfile = async (req, res, next ) =>{
+    
+  const {firstName , lastName , gender}= req.body;
+  const { id } = req.decoded;
+
+  
+  //token---> req.headers
+
+   const user = await dbService.findByIdAndUpdate({
+       model: UserModel,
+       id: id, 
+       data:{firstName , lastName , gender ,$inc: {__v:1} },
+       new: true 
+     });
+  return successResponse({res ,
+           statuscode:200,
+           message:"User Updated Successfuly",
+            data: {user},
+          });
+  
+};
+
+export default {
+    listAllUsers,
+    updateProfile,
 };
