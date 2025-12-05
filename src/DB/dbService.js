@@ -61,11 +61,11 @@ return await model.findByIdAndUpdate(id, data , options);
 
 
 
-    export const findOneIdAndUpdate = async({
+    export const findOneAndUpdate = async({
     model , 
     filter = {},
     data = {},
     options ={new : true , runValidators: true},
     } = {}) => {
-return await model.findOneIdAndUpdate(filter, data , options);
+return await model.findOneAndUpdate(filter, data , options);
     };

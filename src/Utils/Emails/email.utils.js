@@ -15,8 +15,7 @@ export async function sendEmail({
 const transporter = nodemailer.createTransport({ service:"gmail",//or outlook
   auth: {
     user: process.env.EMAIL,
-    pass: process.env.PASSWORD,
-  },
+pass: process.env.EMAIL_PASSWORD,  },
 });
 
   const info = await transporter.sendMail({

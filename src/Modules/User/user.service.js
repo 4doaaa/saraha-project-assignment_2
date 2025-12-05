@@ -8,6 +8,7 @@ import { successResponse } from "../../Utils/successResponse.utils.js";
 export const listAllUsers = async (req, res, next ) =>{
     let users = await dbService.find({
         model: UserModel,
+        populate:[{path:"messages"}],
     });
  
     users = users.map ((userDoc) =>{

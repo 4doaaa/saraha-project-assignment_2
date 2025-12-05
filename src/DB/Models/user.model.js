@@ -3,6 +3,10 @@ export const genderEnum = {
     MALE:"MALE",
     FEMALE:"FEMALE",
 };
+export const providerEnum = {
+    SYSTEM:"SYSTEM",
+    GOOGLE:"GOOGLE",
+};
 const userSchema = new mongoose.Schema({
     firstName: {
         type:String,
@@ -28,22 +32,45 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type:String,
-        required:true,
+        required: function () {
+            return providerEnum.GOOGLE ? false : true;
+        },
+
     },
-    gender:{
+    providers:{
         type:String,
         enum:{
-            values: Object.values(genderEnum), //["Male" , "Female"],
+            values: Object.values(providerEnum), //["Male" , "Female"],
             message:"{VALUE} is not valid gender",
         },
-        default:genderEnum.MALE,
+        default:providerEnum.SYSTEM,
     },
-    phone: String,
-    confirmEmail:Date,
+   confirmEmail: {
+        type: Boolean,
+        default: false          // أهم حاجة!
+    },
+    confirmedAt: {              // لو عايز تسجل تاريخ التأكيد (اختياري)
+        type: Date,
+    },
     confirmEmailOTP: String,
-    
+    confirmEmailOTPExpires: Date,
+
+    forgetPasswordOTP: String,
+    forgetPasswordOTPExpires: Date,
+
 },
- {timestamps: true });
+ {timestamps: true,
+    toJSON:{virtuals:true},
+    toObject:{virtuals:true},
+  });
+ userSchema.virtual("messages" , {
+    localField:"_id",
+foreignField:"receiverId", 
+ref:"Message",
+//justOne:true,
+
+
+});
 const UserModel = mongoose.models.User || mongoose.model("User",userSchema);
 
 export default UserModel;
